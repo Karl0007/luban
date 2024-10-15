@@ -70,7 +70,7 @@ public class TemplateManager
         {
             return strTpl;
         }
-        throw new FileNotFoundException($"can't find {templateName}.sbn in paths:{string.Join(';', _templateSearchPaths)}");
+        throw new FileNotFoundException($"can't find {templateName}.sbn in paths:{String.Join(';', _templateSearchPaths)}");
     }
 
     public Scriban.Template GetTemplate(string templateName)

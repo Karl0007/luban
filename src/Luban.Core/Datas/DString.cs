@@ -98,7 +98,7 @@ public class DString : DType<string>
     {
         if (other is DString d)
         {
-            return String.Compare(this.Value, d.Value, StringComparison.Ordinal);
+            return string.Compare(this.Value, d.Value, StringComparison.Ordinal);
         }
         throw new System.NotSupportedException();
     }

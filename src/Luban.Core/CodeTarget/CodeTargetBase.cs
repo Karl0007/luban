@@ -47,7 +47,7 @@ public abstract class CodeTargetBase : ICodeTarget
             );
     }
 
-    protected abstract IReadOnlySet<string> PreservedKeyWords { get; }
+    protected abstract IReadOnlyCollection<string> PreservedKeyWords { get; }
 
     protected bool IsPreserveKeyWords(string name)
     {

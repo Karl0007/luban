@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+#if NET
 using static System.Runtime.InteropServices.JavaScript.JSType;
+#endif
 
 namespace Luban.DataVisitors;
 

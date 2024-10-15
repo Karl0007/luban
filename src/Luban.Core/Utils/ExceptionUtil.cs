@@ -11,6 +11,6 @@ public static class ExceptionUtil
             e = e.InnerException;
         } while (e != null);
 
-        return string.Join('\n', lines);
+        return String.Join('\n', lines);
     }
 }

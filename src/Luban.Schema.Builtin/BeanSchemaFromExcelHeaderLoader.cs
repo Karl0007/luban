@@ -94,7 +94,11 @@ public class BeanSchemaFromExcelHeaderLoader : IBeanSchemaLoader
             cf.Type = attrs[0];
             for (int i = 1; i < attrs.Length; i++)
             {
+#if NET
                 var pair = attrs[i].Split('=', 2);
+#else
+                var pair = attrs[i].Split('=');
+#endif
                 if (pair.Length != 2)
                 {
                     throw new Exception($"file:{fileName} title:'{name}' attr:'{attrs[i]}' is invalid!");

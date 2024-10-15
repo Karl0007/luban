@@ -16,7 +16,11 @@ public class FileCleaner
 
     public void AddOutputDir(string dir)
     {
+#if NET
         dir = Path.TrimEndingDirectorySeparator(dir);
+#else
+        dir = dir.TrimEndingDirectorySeparator();
+#endif
         _outputDirs.Add(dir);
     }
 

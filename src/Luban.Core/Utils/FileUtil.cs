@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -53,12 +54,31 @@ public static class FileUtil
         {
             return false;
         }
+#if NET
         if (OperatingSystem.IsWindows())
         {
             var fileName = Path.GetFileName(path);
             var files = Directory.GetFiles(Path.GetDirectoryName(path), fileName, new EnumerationOptions() { MatchCasing = MatchCasing.CaseSensitive });
             return files.Length > 0;
         }
+#else
+        // 在 Windows 上，我们需要手动实现区分大小写的逻辑
+        if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+        {
+            string directoryPath = Path.GetDirectoryName(path);
+            string fileName = Path.GetFileName(path);
+            // 在 Windows 上，我们可以使用 Directory.EnumerateFiles 加上通配符来实现
+            string searchPattern = $"*{Path.GetExtension(fileName)}";
+            foreach (string file in Directory.EnumerateFiles(directoryPath, searchPattern))
+            {
+                if (Path.GetFileName(file).Equals(fileName, StringComparison.Ordinal))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+#endif
         else
         {
             return true;
@@ -204,7 +224,7 @@ public static class FileUtil
         long count = bytes.LongLength;
         fs.SetLength(count);
         fs.Seek(0, SeekOrigin.Begin);
-        await fs.WriteAsync(bytes);
+        await fs.WriteAsync(bytes,0,bytes.Length);
     }
 
     public static void DeleteDirectoryRecursive(string rootDir)
